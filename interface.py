@@ -1,12 +1,13 @@
 from tkinter import *
-from cipher_core import encrypt_text, decrypt_text
+from tkinter import filedialog
+
+from cipher_core import encrypt_text, decrypt_text, encrypt_file
 
 # ___________INTERFACE
 
 tk = Tk()
 tk.title('ImBeCiLe Encryptor')
 tk.geometry('550x500')
-
 
 class Application(Frame):
     def __init__(self, master=None):
@@ -25,8 +26,8 @@ class Application(Frame):
         self.inp_text = Entry(self.frame_encrypt, font=self.font)
         self.inp_text.pack()
 
-        self.inp_text_label = Label(self.frame_encrypt, text='key(16 bytes): ', font=self.font)
-        self.inp_text_label.pack()
+        self.inp_key_label = Label(self.frame_encrypt, text='key(16 bytes): ', font=self.font)
+        self.inp_key_label.pack()
 
         self.original_key = StringVar()
         self.inp_key = Entry(self.frame_encrypt, font=self.font, textvariable=self.original_key)
@@ -40,6 +41,15 @@ class Application(Frame):
         self.log = Text(self.frame_encrypt, font=self.font, height=15, width=30)
         self.log.pack()
 
+        self.mode = IntVar()
+        self.text_mode = Radiobutton(self.frame_encrypt, text='TEXT', variable=self.mode, value=1,
+                                     command=self.use_encrypt)
+        self.file_mode = Radiobutton(self.frame_encrypt, text='FILE', variable=self.mode, value=0,
+                                     command=self.file_mode)
+        self.text_mode.select()
+        self.text_mode.pack(side='left')
+        self.file_mode.pack(side='left')
+
         self.frame_encrypt.pack()
 
     def create_decrypt_frame(self):
@@ -48,8 +58,8 @@ class Application(Frame):
         self.inp_text_label = Label(self.frame_decrypt, text='input encrypted text: ', font=self.font)
         self.inp_text_label.pack()
 
-        self.inp_text_decrypt = Entry(self.frame_decrypt, font=self.font)
-        self.inp_text_decrypt.pack()
+        self.inp_key_decrypt = Entry(self.frame_decrypt, font=self.font)
+        self.inp_key_decrypt.pack()
 
         self.inp_text_label = Label(self.frame_decrypt, text='key(16 bytes): ', font=self.font)
         self.inp_text_label.pack()
@@ -64,15 +74,37 @@ class Application(Frame):
 
         self.log_decrypt = Text(self.frame_decrypt, font=self.font, height=15, width=30)
         self.log_decrypt.pack()
+
+        self.mode = IntVar()
+        self.text_mode = Radiobutton(self.frame_decrypt, text='TEXT', variable=self.mode, value=1)
+        self.file_mode = Radiobutton(self.frame_decrypt, text='FILE', variable=self.mode, value=0,
+                                     command=self.file_mode)
+        self.text_mode.select()
+        self.text_mode.pack(side='left')
+        self.file_mode.pack(side='left')
+
         self.frame_decrypt.pack()
 
     def use_encrypt(self):
-        self.frame_decrypt.pack_forget()
-        self.create_encrypt_frame()
+        try:
+            self.frame_decrypt.pack_forget()
+
+        except AttributeError:
+            try:
+                self.frame_encrypt.pack_forget()
+            except AttributeError:
+                pass
+        finally:
+            self.create_encrypt_frame()
 
     def use_decrypt(self):
-        self.frame_encrypt.pack_forget()
-        self.create_decrypt_frame()
+        try:
+            self.frame_encrypt.pack_forget()
+            self.frame_decrypt.pack_forget()
+        except AttributeError:
+            pass
+        finally:
+            self.create_decrypt_frame()
 
     def print_encrypt(self, event):
         self.log.delete(0.0, END)
@@ -95,5 +127,28 @@ class Application(Frame):
         fm.add_command(label='Encrypt Mode', command=self.use_encrypt)
         fm.add_command(label='Decrypt Mode', command=self.use_decrypt)
 
+    def load_file(self, ev):
+        self.fn = filedialog.askopenfilename(
+            filetypes=(("TXT files", "*.txt"), ("HTML files", "*.html;*.htm"), ("All files", "*.*")))
+        print(self.fn)
+        if self.fn == '':
+            return
+        self.log.delete(0.0, END)
+        self.log.insert(0.0, 'file loaded.')
+
+    def file_mode(self):
+        self.frame_encrypt.pack_forget()
+        self.inp_text_label.pack_forget()
+        self.inp_text.pack_forget()
+        self.choose_button = Button(self.frame_encrypt, text='File...', font=self.font)
+        self.choose_button.bind('<Button-1>', self.load_file)
+        self.choose_button.pack()
+
+        self.but_encrypt.bind('<Button-1>', self.print_encrypt_file)
+        self.frame_encrypt.pack()
+
+    def print_encrypt_file(self, ev):
+        encrypt_file(self.fn, self.inp_key.get())
+        self.log.insert(END, '\nOK... File encrypted')
 
 app = Application(master=tk)

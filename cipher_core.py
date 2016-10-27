@@ -29,7 +29,6 @@ def decrypt_text(encrypt_text, original_key):
 # a = encrypt_text('22222342', '90qwerty12345678')
 # decrypt_text(a, '90qwerty12345678')
 
-
 # ___________________FILES
 def encrypt_file(file, original_key):
     key = original_key.encode('utf-8')[0:32]
@@ -57,6 +56,5 @@ def decrypt_file(file, original_key):
 
     with open(file, 'wb') as f:
         f.write(cfb_msg_decrypt)
-
     print('OK.')
     print('File decrypt: {0}'.format(cfb_msg_decrypt.decode('utf-8')))
