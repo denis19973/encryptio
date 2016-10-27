@@ -92,4 +92,3 @@ main_menu.add_cascade(label='Mode', menu=fm)
 fm.add_command(label='Encrypt Mode', command=encrypt_mode)
 fm.add_command(label='Decrypt Mode', command=decrypt_mode)
 
-tk.mainloop()

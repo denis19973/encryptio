@@ -1,14 +1,11 @@
 from Crypto.Cipher import AES
 from Crypto import Random
 from base64 import b64encode, b64decode
-from interface import *
-
 
 print('AES block size: {0}'.format(AES.block_size))
 # CFB_IV
 #TODO remove hardcode
 cfb_iv = '1234567890qwerty'
-
 
 # ___________________TEXT
 
@@ -62,16 +59,4 @@ def decrypt_file(file, original_key):
         f.write(cfb_msg_decrypt)
 
     print('OK.')
-
     print('File decrypt: {0}'.format(cfb_msg_decrypt.decode('utf-8')))
-
-
-#####################################################
-
-#encrypt_file('raz.txt', '90qwerty12345678')
-#decrypt_file('raz.txt', '90qwerty12345678')
-
-
-
-
-
