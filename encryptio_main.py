@@ -1,4 +1,3 @@
-from cipher_core import *
 from interface import *
 
 

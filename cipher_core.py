@@ -1,11 +1,12 @@
-from Crypto.Cipher import AES
-from Crypto import Random
 from base64 import b64encode, b64decode
+
+from Crypto.Cipher import AES
 
 print('AES block size: {0}'.format(AES.block_size))
 # CFB_IV
-#TODO remove hardcode
+# TODO remove hardcode
 cfb_iv = '1234567890qwerty'
+
 
 # ___________________TEXT
 
