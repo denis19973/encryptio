@@ -18,7 +18,6 @@ def encrypt_text(plain_text, original_key):
     print('Encrypt text {} :'.format(cfb_msg_encrypt.decode('utf-8')))
     return cfb_msg_encrypt
 
-
 def decrypt_text(encrypt_text, original_key):
     key = original_key.encode('utf-8')[0:32]
     cfb_cipher_decrypt = AES.new(key, AES.MODE_CFB, cfb_iv)
@@ -27,10 +26,8 @@ def decrypt_text(encrypt_text, original_key):
     return cfb_msg_decrypt
 
 
-# a = encrypt_text('22222342', '90qwerty12345678')
-# decrypt_text(a, '90qwerty12345678')
-
 # ___________________FILES
+
 def encrypt_file(file, original_key):
     key = original_key.encode('utf-8')[0:32]
     with open(file, 'rb') as f:
@@ -44,7 +41,6 @@ def encrypt_file(file, original_key):
         f.write(cfb_msg_encrypt)
 
     print('Encrypted file: {}'.format(cfb_msg_encrypt.decode('utf-8')))
-
 
 def decrypt_file(file, original_key):
     print('Your key is: {}'.format(original_key))

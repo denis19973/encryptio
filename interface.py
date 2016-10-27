@@ -6,7 +6,7 @@ from cipher_core import encrypt_text, decrypt_text, encrypt_file, decrypt_file
 # ___________INTERFACE
 
 tk = Tk()
-tk.title('ImBeCiLe Encryptor')
+tk.title('EnCrYpTiO')
 tk.geometry('550x500')
 
 
@@ -134,8 +134,13 @@ class Application(Frame):
         print(self.fn)
         if self.fn == '':
             return
-        self.log.delete(0.0, END)
-        self.log.insert(0.0, 'file loaded.')
+
+        if self.frame_encrypt.winfo_viewable():
+            self.log.delete(0.0, END)
+            self.log.insert(0.0, 'file loaded.')
+        elif self.frame_decrypt.winfo_viewable():
+            self.log_decrypt.delete(0.0, END)
+            self.log_decrypt.insert(0.0, 'file loaded.')
 
     def use_file_mode(self):
         if self.frame_encrypt.winfo_viewable():
@@ -154,7 +159,6 @@ class Application(Frame):
             self.choose_button.pack()
             self.but_encrypt.bind('<Button-1>', self.print_decrypt_file)
 
-
     def print_encrypt_file(self, ev):
         encrypt_file(self.fn, self.inp_key.get())
         self.log.insert(END, '\nOK... File encrypted')
@@ -164,9 +168,4 @@ class Application(Frame):
         self.log_decrypt.insert(END, '\nOK... File encrypted')
 
 
-
-
-
 app = Application(master=tk)
-
-
