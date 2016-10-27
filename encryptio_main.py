@@ -9,4 +9,4 @@ from interface import *
 #decrypt_file('raz.txt', '90qwerty12345678')
 
 if __name__ == '__main__':
-    tk.mainloop()
+    app.mainloop()
