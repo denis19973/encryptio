@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/encryptio.iml" filepath="$PROJECT_DIR$/.idea/encryptio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../private-chat/.idea/private-chat.iml" filepath="$PROJECT_DIR$/../private-chat/.idea/private-chat.iml" />
     </modules>
   </component>
 </project>
