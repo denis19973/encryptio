@@ -19,6 +19,7 @@ class Application(Frame):
         self.show_menu()
         self.create_encrypt_frame()
 
+    # frames
     def create_encrypt_frame(self) -> object:
         self.frame_encrypt = Frame(tk)
 
@@ -86,6 +87,18 @@ class Application(Frame):
 
         self.frame_decrypt.pack()
 
+    # ######
+
+    def show_menu(self):
+        main_menu = Menu(tk)
+        tk.config(menu=main_menu)
+
+        fm = Menu(tk)
+        main_menu.add_cascade(label='Mode', menu=fm)
+        fm.add_command(label='Encrypt Mode', command=self.use_encrypt)
+        fm.add_command(label='Decrypt Mode', command=self.use_decrypt)
+
+    # handlers for menu
     def use_encrypt(self):
         try:
             self.frame_decrypt.pack_forget()
@@ -106,6 +119,9 @@ class Application(Frame):
             pass
         finally:
             self.create_decrypt_frame()
+        # ######
+
+        # printing encrypt/decrypt text in log
 
     def print_encrypt(self, event):
         self.log.delete(0.0, END)
@@ -118,15 +134,7 @@ class Application(Frame):
                                                          self.inp_key_decrypt.get()))
         except UnicodeDecodeError:
             self.log_decrypt.insert(INSERT, 'incorrect key.')
-
-    def show_menu(self):
-        main_menu = Menu(tk)
-        tk.config(menu=main_menu)
-
-        fm = Menu(tk)
-        main_menu.add_cascade(label='Mode', menu=fm)
-        fm.add_command(label='Encrypt Mode', command=self.use_encrypt)
-        fm.add_command(label='Decrypt Mode', command=self.use_decrypt)
+        # ######
 
     def load_file(self, ev):
         self.fn = filedialog.askopenfilename(
@@ -141,6 +149,8 @@ class Application(Frame):
         elif self.frame_decrypt.winfo_viewable():
             self.log_decrypt.delete(0.0, END)
             self.log_decrypt.insert(0.0, 'file loaded.')
+
+        # file mode for encrypt/decrypt mode
 
     def use_file_mode(self):
         if self.frame_encrypt.winfo_viewable():
@@ -158,6 +168,9 @@ class Application(Frame):
             self.choose_button.bind('<Button-1>', self.load_file)
             self.choose_button.pack()
             self.but_encrypt.bind('<Button-1>', self.print_decrypt_file)
+        # ######
+
+        # print information about file
 
     def print_encrypt_file(self, ev):
         encrypt_file(self.fn, self.inp_key.get())
@@ -167,5 +180,7 @@ class Application(Frame):
         decrypt_file(self.fn, self.inp_key_decrypt.get())
         self.log_decrypt.insert(END, '\nOK... File encrypted')
 
+
+        # ######
 
 app = Application(master=tk)

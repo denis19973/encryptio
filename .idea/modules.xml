@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/encryptio.iml" filepath="$PROJECT_DIR$/.idea/encryptio.iml" />
       <module fileurl="file://$PROJECT_DIR$/../private-chat/.idea/private-chat.iml" filepath="$PROJECT_DIR$/../private-chat/.idea/private-chat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../simple-http-server/.idea/simple-http-server.iml" filepath="$PROJECT_DIR$/../simple-http-server/.idea/simple-http-server.iml" />
     </modules>
   </component>
 </project>
